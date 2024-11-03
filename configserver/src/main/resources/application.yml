@@ -1,0 +1,43 @@
+server:
+  port: 8071
+
+spring:
+  profiles:
+    #active: native
+    active: git
+  cloud:
+    config:
+      server:
+        #native:
+         # search-locations: "file:///C://Users//JAGAN//IdeaProjects//Microservices Project for Udmey//config"
+        git:
+          uri: "https://github.com/Jaganathan-L/config-server-microservice.git"
+          default-label: main
+          timeout: 50
+          clone-on-start: true
+          force-pull: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+encrypt:
+  key: "6A2D894423B574DBBA48EA52AA2BD"
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
